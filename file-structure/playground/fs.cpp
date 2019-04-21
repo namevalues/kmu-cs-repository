@@ -160,21 +160,21 @@ public:
 class DoubleLinkedList
 {
 private:
-    DLL_Node *head = NULL;
+  DLL_Node *head = NULL;
 
 public:
-    void insert(int num);
-    void deleteNode(int num);
-    bool isempty();
-    void insearch(int num);
-    void forward();
-    void backward();
-    int get_length();
-    void insertafter(int index, int num);
-    void insertbefore(int index, int num);
-    DLL_Node *Find(int num);
-    void remove(int index);
-    void findNth(int index);
+  void insert(int num);
+  void deleteNode(int num);
+  bool isempty();
+  void insearch(int num);
+  void forward();
+  void backward();
+  int get_length();
+  void insertafter(int index, int num);
+  void insertbefore(int index, int num);
+  DLL_Node *Find(int num);
+  void remove(int index);
+  void findNth(int index);
 };
 
 void Stack::createStack()
@@ -299,21 +299,28 @@ void CircularQueue::create_queue()
 
 void CircularQueue::enqueue(int data)
 {
-  if (rear == queueSize - 1)
+  if (isFull())
   {
-    isFull();
-    return;
+    cout << "QueueFull" << endl;
   }
-  circularQueue[++rear] = data;
+  else
+  {
+    circularQueue[++rear] = data;
+  }
 }
 
 int CircularQueue::dequeue()
 {
-  if (front == rear)
+  if (isEmpty())
   {
-    return isEmpty();
+    cout << "QueueEmpty" << endl;
+    return 0;
   }
-  return circularQueue[++front];
+  else
+  {
+    front = (front + 1) % queueSize;
+    return circularQueue[front];
+  }
 }
 
 bool CircularQueue::isEmpty()
@@ -331,9 +338,9 @@ bool CircularQueue::isEmpty()
 
 bool CircularQueue::isFull()
 {
-  if (rear == queueSize - 1)
+  int tmp = (rear + 1) % queueSize;
+  if (tmp == front)
   {
-    cout << "Queue Full";
     return 1;
   }
   else
@@ -589,285 +596,283 @@ void CircularLinkedList::deleteNode(int data)
 int DoubleLinkedList::get_length()
 {
 
-    DLL_Node *p = NULL;
-    int length = 0;
+  DLL_Node *p = NULL;
+  int length = 0;
 
-    if (isempty())
-        cout << "not list" << endl;
-    else
+  if (isempty())
+    cout << "not list" << endl;
+  else
+  {
+    p = head;
+    while (p != 0)
     {
-        p = head;
-        while (p != 0)
-        {
-            length += 1;
-            p = p->next;
-        }
+      length += 1;
+      p = p->next;
     }
+  }
 
-    return length;
+  return length;
 }
 void DoubleLinkedList::forward()
 {
-    DLL_Node *p = NULL;
+  DLL_Node *p = NULL;
 
-    if (isempty())
-        cout << "not list" << endl;
-    else
+  if (isempty())
+    cout << "not list" << endl;
+  else
+  {
+    p = head;
+    while (p != 0)
     {
-        p = head;
-        while (p != 0)
-        {
-            cout << p->data << " ";
-            p = p->next;
-        }
-        cout << endl;
+      cout << p->data << " ";
+      p = p->next;
     }
+    cout << endl;
+  }
 }
 void DoubleLinkedList::backward()
 {
-    DLL_Node *p = NULL;
+  DLL_Node *p = NULL;
 
-    if (isempty())
-        cout << "not list" << endl;
-    else
+  if (isempty())
+    cout << "not list" << endl;
+  else
+  {
+    p = head;
+    while (p->next != 0)
     {
-        p = head;
-        while (p->next != 0)
-        {
-            p = p->next;
-        }
-        while (p != 0)
-        {
-            cout << p->data << " ";
-            p = p->prev;
-        }
-        cout << endl;
+      p = p->next;
     }
+    while (p != 0)
+    {
+      cout << p->data << " ";
+      p = p->prev;
+    }
+    cout << endl;
+  }
 }
 void DoubleLinkedList::insearch(int num)
 {
-    DLL_Node *p = NULL;
-    DLL_Node *q = NULL;
+  DLL_Node *p = NULL;
+  DLL_Node *q = NULL;
 
-    p = head;
-    if (!isempty())
+  p = head;
+  if (!isempty())
+  {
+    if (p->data == num)
     {
-        if (p->data == num)
-        {
-            cout << "찾는 수 " << p->data << "은(는) 리스트 안에 있습니다." << endl;
-        }
-        else
-        {
-            while (p != 0 && p->data != num)
-            {
-                q = p;
-                p = p->next;
-            }
-            if (p != 0)
-            {
-                cout << "찾는 수 " << p->data << "은(는) 리스트 안에 있습니다." << endl;
-            }
-            else
-            {
-                cout << "해당 숫자는 리스트 안에 없습니다." << endl;
-            }
-        }
+      cout << "찾는 수 " << p->data << "은(는) 리스트 안에 있습니다." << endl;
     }
     else
-        cout << "List is empty" << endl;
+    {
+      while (p != 0 && p->data != num)
+      {
+        q = p;
+        p = p->next;
+      }
+      if (p != 0)
+      {
+        cout << "찾는 수 " << p->data << "은(는) 리스트 안에 있습니다." << endl;
+      }
+      else
+      {
+        cout << "해당 숫자는 리스트 안에 없습니다." << endl;
+      }
+    }
+  }
+  else
+    cout << "List is empty" << endl;
 }
-
-
 
 void DoubleLinkedList::deleteNode(int num)
 {
-    DLL_Node *p = NULL;
-    DLL_Node *q = NULL;
-    p = head;
-    if (!isempty())
+  DLL_Node *p = NULL;
+  DLL_Node *q = NULL;
+  p = head;
+  if (!isempty())
+  {
+    if (p->data == num)
     {
-        if (p->data == num)
-        {
-            q = p;
-            p = p->next;
-            head = p;
-            cout << q->data << "을(를) 리스트에서 삭제했습니다. " << endl;
-            delete q;
-        }
-        else
-        {
-            while (p != 0 && p->data != num)
-            {
-                q = p;
-                p = p->next;
-            }
-            if (p != 0)
-            {
-                if (p->next != 0)
-                {
-                    q->next = p->next;
-                    p->next->prev = q;
-                }
-                else
-                {
-                    q->next = NULL;
-                }
-                cout << p->data << "을(를) 리스트에서 삭제했습니다. " << endl;
-                delete p;
-            }
-            else
-            {
-                cout << "해당 숫자는 리스트 안에 없습니다." << endl;
-            }
-        }
+      q = p;
+      p = p->next;
+      head = p;
+      cout << q->data << "을(를) 리스트에서 삭제했습니다. " << endl;
+      delete q;
     }
     else
     {
-        cout << "LIst is Empty" << endl;
+      while (p != 0 && p->data != num)
+      {
+        q = p;
+        p = p->next;
+      }
+      if (p != 0)
+      {
+        if (p->next != 0)
+        {
+          q->next = p->next;
+          p->next->prev = q;
+        }
+        else
+        {
+          q->next = NULL;
+        }
+        cout << p->data << "을(를) 리스트에서 삭제했습니다. " << endl;
+        delete p;
+      }
+      else
+      {
+        cout << "해당 숫자는 리스트 안에 없습니다." << endl;
+      }
     }
+  }
+  else
+  {
+    cout << "LIst is Empty" << endl;
+  }
 }
 
 void DoubleLinkedList::remove(int index)
 {
-    int checkIndex = 0;
-    DLL_Node *p = NULL;
-    DLL_Node *q = NULL;
-    p = head;
-    if (!isempty())
+  int checkIndex = 0;
+  DLL_Node *p = NULL;
+  DLL_Node *q = NULL;
+  p = head;
+  if (!isempty())
+  {
+    if (checkIndex == index)
     {
-        if (checkIndex == index)
-        {
-            q = p;
-            p = p->next;
-            head = p;
-            cout << q->data << "을(를) 리스트에서 삭제했습니다. " << endl;
-            delete q;
-        }
-        else
-        {
-            while (p != 0 && checkIndex != index)
-            {
-                q = p;
-                p = p->next;
-                ++checkIndex;
-            }
-            if (p != 0)
-            {
-                if (p->next != 0)
-                {
-                    q->next = p->next;
-                    p->next->prev = q;
-                }
-                else
-                {
-                    q->next = NULL;
-                }
-                cout << p->data << "을(를) 리스트에서 삭제했습니다. " << endl;
-                delete p;
-            }
-            else
-            {
-                cout << "해당 숫자는 리스트 안에 없습니다." << endl;
-            }
-        }
+      q = p;
+      p = p->next;
+      head = p;
+      cout << q->data << "을(를) 리스트에서 삭제했습니다. " << endl;
+      delete q;
     }
     else
     {
-        cout << "LIst is Empty" << endl;
+      while (p != 0 && checkIndex != index)
+      {
+        q = p;
+        p = p->next;
+        ++checkIndex;
+      }
+      if (p != 0)
+      {
+        if (p->next != 0)
+        {
+          q->next = p->next;
+          p->next->prev = q;
+        }
+        else
+        {
+          q->next = NULL;
+        }
+        cout << p->data << "을(를) 리스트에서 삭제했습니다. " << endl;
+        delete p;
+      }
+      else
+      {
+        cout << "해당 숫자는 리스트 안에 없습니다." << endl;
+      }
     }
+  }
+  else
+  {
+    cout << "LIst is Empty" << endl;
+  }
 }
 
 DLL_Node *DoubleLinkedList::Find(int index)
 {
 
-    DLL_Node *temp = head;
+  DLL_Node *temp = head;
 
-    for (int i = 1; i < index; ++i)
-    {
-        temp = temp->next;
-    }
-    return temp;
+  for (int i = 1; i < index; ++i)
+  {
+    temp = temp->next;
+  }
+  return temp;
 }
 
 void DoubleLinkedList::insertafter(int index, int num)
 {
 
-    DLL_Node *find = Find(index);
-    DLL_Node *newNode = new DLL_Node(num);
-    newNode->next = find->next;
-    newNode->prev = find;
-    find->next = newNode;
-    newNode->next->prev = newNode;
+  DLL_Node *find = Find(index);
+  DLL_Node *newNode = new DLL_Node(num);
+  newNode->next = find->next;
+  newNode->prev = find;
+  find->next = newNode;
+  newNode->next->prev = newNode;
 }
 
 void DoubleLinkedList::insertbefore(int index, int num)
 {
 
-    DLL_Node *find = Find(index);
-    DLL_Node *newNode = new DLL_Node(num);
-    newNode->next = find;
-    newNode->prev = find->prev;
-    find->prev = newNode;
-    newNode->prev->next = newNode;
+  DLL_Node *find = Find(index);
+  DLL_Node *newNode = new DLL_Node(num);
+  newNode->next = find;
+  newNode->prev = find->prev;
+  find->prev = newNode;
+  newNode->prev->next = newNode;
 }
 
 void DoubleLinkedList::insert(int num)
 {
-    DLL_Node *p = NULL;
-    DLL_Node *q = NULL;
-    DLL_Node *temp = new DLL_Node();
-    temp->data = num;
+  DLL_Node *p = NULL;
+  DLL_Node *q = NULL;
+  DLL_Node *temp = new DLL_Node();
+  temp->data = num;
 
-    if (head == 0)
-        head = temp;
+  if (head == 0)
+    head = temp;
+  else
+  {
+    p = head;
+    if (temp->data <= head->data)
+    {
+      temp->next = p;
+      p->prev = temp;
+      head = temp;
+    }
     else
     {
-        p = head;
-        if (temp->data <= head->data)
-        {
-            temp->next = p;
-            p->prev = temp;
-            head = temp;
-        }
-        else
-        {
-            while (p != 0 && temp->data > p->data)
-            {
-                q = p;
-                p = p->next;
-            }
-            if (p != 0)
-            {
-                q->next = temp;
-                temp->prev = q;
-                temp->next = p;
-                p->prev = temp;
-            }
-            else
-            {
-                q->next = temp;
-                temp->prev = q;
-            }
-        }
+      while (p != 0 && temp->data > p->data)
+      {
+        q = p;
+        p = p->next;
+      }
+      if (p != 0)
+      {
+        q->next = temp;
+        temp->prev = q;
+        temp->next = p;
+        p->prev = temp;
+      }
+      else
+      {
+        q->next = temp;
+        temp->prev = q;
+      }
     }
+  }
 }
 
 bool DoubleLinkedList::isempty()
 {
-    if (head == 0)
-        return 1;
-    else
-        return 0;
+  if (head == 0)
+    return 1;
+  else
+    return 0;
 }
 
 void DoubleLinkedList::findNth(int index)
 {
-    DLL_Node *temp = head;
-    for(int i = 0; i < index; i ++)
-    {
-        temp = temp -> next;
-    }
-    cout << temp->data << endl;
+  DLL_Node *temp = head;
+  for (int i = 0; i < index; i++)
+  {
+    temp = temp->next;
+  }
+  cout << temp->data << endl;
 }
 
 int main(void)
