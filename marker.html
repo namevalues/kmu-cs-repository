@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Custom Popups</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+      height: 100%;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* The popup bubble styling. */
+    .popup-bubble {
+      /* Position the bubble centred-above its parent. */
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -100%);
+      /* Style the bubble. */
+      background-color: transparent;
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      font-family: 'Apple SD Gothic';
+      font-weight: bold;
+      font-size: 14px;
+      overflow-y: auto;
+      max-height: 60px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* The parent of the bubble. A zero-height div at the top of the tip. */
+    .popup-bubble-anchor {
+      /* Position the div a fixed distance above the tip. */
+      position: absolute;
+      width: 100%;
+      bottom:
+        /* TIP_HEIGHT= */
+        8px;
+      left: 0;
+      text-align: center;
+    }
+
+    /* JavaScript will position this div at the bottom of the popup tip. */
+    .popup-container {
+      cursor: auto;
+      height: 0;
+      position: absolute;
+      /* The max width of the info window. */
+      width: 200px;
+    }
+  </style>
+</head>
+
+<body id="body">
+  <div id="map"></div>
+  <script>
+    var map, popup, Popup, popup2, Popup2;
+
+    var item = {
+      "data": [
+        {
+          "location": "행정구역별(시군구)",
+          "주택의 종류별": "주택의 종류별",
+          "latitude": "latitude",
+          "longitude": "longitude",
+          "year2017": "2017년"
+        },
+        {
+          "location": "　　　종로구",
+          "주택의 종류별": "계",
+          "latitude": "37.592128",
+          "longitude": "126.97942",
+          "year2017": "10"
+        },
+        {
+          "location": "　　　중구",
+          "주택의 종류별": "계",
+          "latitude": "37.557335",
+          "longitude": "126.997985",
+          "year2017": "24"
+        },
+        {
+          "location": "　　　용산구",
+          "주택의 종류별": "계",
+          "latitude": "37.528582",
+          "longitude": "126.981987",
+          "year2017": "36"
+        },
+        {
+          "location": "　　　성동구",
+          "주택의 종류별": "계",
+          "latitude": "37.54824",
+          "longitude": "127.043114",
+          "year2017": "19"
+        },
+        {
+          "location": "　　　광진구",
+          "주택의 종류별": "계",
+          "latitude": "37.543059",
+          "longitude": "127.088351",
+          "year2017": "98"
+        },
+        {
+          "location": "　　　동대문구",
+          "주택의 종류별": "계",
+          "latitude": "37.579132",
+          "longitude": "127.057221",
+          "year2017": "151"
+        },
+        {
+          "location": "　　　중랑구",
+          "주택의 종류별": "계",
+          "latitude": "37.595194",
+          "longitude": "127.095157",
+          "year2017": "55"
+        },
+        {
+          "location": "　　　성북구",
+          "주택의 종류별": "계",
+          "latitude": "37.602917",
+          "longitude": "127.019697",
+          "year2017": "61"
+        },
+        {
+          "location": "　　　강북구",
+          "주택의 종류별": "계",
+          "latitude": "37.64071",
+          "longitude": "127.013272",
+          "year2017": "53"
+        },
+        {
+          "location": "　　　도봉구",
+          "주택의 종류별": "계",
+          "latitude": "37.66633",
+          "longitude": "127.034471",
+          "year2017": "65"
+        },
+        {
+          "location": "　　　노원구",
+          "주택의 종류별": "계",
+          "latitude": "37.649734",
+          "longitude": "127.077134",
+          "year2017": "32"
+        },
+        {
+          "location": "　　　은평구",
+          "주택의 종류별": "계",
+          "latitude": "37.616431",
+          "longitude": "126.929119",
+          "year2017": "199"
+        },
+        {
+          "location": "　　　서대문구",
+          "주택의 종류별": "계",
+          "latitude": "37.57507",
+          "longitude": "126.941155",
+          "year2017": "31"
+        },
+        {
+          "location": "　　　마포구",
+          "주택의 종류별": "계",
+          "latitude": "37.556708",
+          "longitude": "126.910326",
+          "year2017": "63"
+        },
+        {
+          "location": "　　　양천구",
+          "주택의 종류별": "계",
+          "latitude": "37.52194",
+          "longitude": "126.857526",
+          "year2017": "40"
+        },
+        {
+          "location": "　　　강서구",
+          "주택의 종류별": "계",
+          "latitude": "37.55844",
+          "longitude": "126.824859",
+          "year2017": "102"
+        },
+        {
+          "location": "　　　구로구",
+          "주택의 종류별": "계",
+          "latitude": "37.491581",
+          "longitude": "126.858351",
+          "year2017": "87"
+        },
+        {
+          "location": "　　　금천구",
+          "주택의 종류별": "계",
+          "latitude": "37.457775",
+          "longitude": "126.902894",
+          "year2017": "46"
+        },
+        {
+          "location": "　　　영등포구",
+          "주택의 종류별": "계",
+          "latitude": "37.519739",
+          "longitude": "126.912303",
+          "year2017": "495"
+        },
+        {
+          "location": "　　　동작구",
+          "주택의 종류별": "계",
+          "latitude": "37.496075",
+          "longitude": "126.953734",
+          "year2017": "70"
+        },
+        {
+          "location": "　　　관악구",
+          "주택의 종류별": "계",
+          "latitude": "37.46457",
+          "longitude": "126.947435",
+          "year2017": "32"
+        },
+        {
+          "location": "　　　서초구",
+          "주택의 종류별": "계",
+          "latitude": "37.47074",
+          "longitude": "127.033245",
+          "year2017": "161"
+        },
+        {
+          "location": "　　　강남구",
+          "주택의 종류별": "계",
+          "latitude": "37.493712",
+          "longitude": "127.0653334",
+          "year2017": "25"
+        },
+        {
+          "location": "　　　송파구",
+          "주택의 종류별": "계",
+          "latitude": "37.502168",
+          "longitude": "127.118003",
+          "year2017": "1384"
+        },
+        {
+          "location": "　　　강동구",
+          "주택의 종류별": "계",
+          "latitude": "37.517522",
+          "longitude": "127.149107",
+          "year2017": "187"
+        }
+      ]
+    }
+
+    console.log(item.data[1].location);
+
+
+
+    /** Initializes the map and the custom popup. */
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 37.6006067, lng: 126.986496 },
+        zoom: 12,
+      });
+
+      var x = document.getElementById('body');
+
+      for (var i = 1; i < item.data.length; i++) {
+        var cityCircle = new google.maps.Circle({
+          strokeColor: '#A5D8FA',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#A5D8FA',
+          fillOpacity: 0.8,
+          map: map,
+          center: {
+            lat: Number(item.data[i].latitude),
+            lng: Number(item.data[i].longitude)
+          },
+          radius: 20
+        });
+
+        console.log(cityCircle);
+        
+        var content = document.createElement('div');
+        var node = document.createTextNode(item.data[i].year2017);
+        content.setAttribute("id", "content" + i);
+        content.appendChild(node);
+        x.appendChild(content);
+        Popup = createPopupClass();
+        popup = new Popup(
+          new google.maps.LatLng(Number(item.data[i].latitude)-0.006, Number(item.data[i].longitude)),
+          document.getElementById('content' + i));
+        popup.setMap(map);
+        
+      }
+    }
+
+    /**
+     * Returns the Popup class.
+     *
+     * Unfortunately, the Popup class can only be defined after
+     * google.maps.OverlayView is defined, when the Maps API is loaded.
+     * This function should be called by initMap.
+     */
+    function createPopupClass() {
+      /**
+       * A customized popup on the map.
+       * @param {!google.maps.LatLng} position
+       * @param {!Element} content The bubble div.
+       * @constructor
+       * @extends {google.maps.OverlayView}
+       */
+      function Popup(position, content) {
+        this.position = position;
+
+        content.classList.add('popup-bubble');
+
+        // This zero-height div is positioned at the bottom of the bubble.
+        var bubbleAnchor = document.createElement('div');
+        bubbleAnchor.classList.add('popup-bubble-anchor');
+        bubbleAnchor.appendChild(content);
+
+        // This zero-height div is positioned at the bottom of the tip.
+        this.containerDiv = document.createElement('div');
+        this.containerDiv.classList.add('popup-container');
+        this.containerDiv.appendChild(bubbleAnchor);
+
+        // Optionally stop clicks, etc., from bubbling up to the map.
+        google.maps.OverlayView.preventMapHitsAndGesturesFrom(this.containerDiv);
+      }
+      // ES5 magic to extend google.maps.OverlayView.
+      Popup.prototype = Object.create(google.maps.OverlayView.prototype);
+
+      /** Called when the popup is added to the map. */
+      Popup.prototype.onAdd = function () {
+        this.getPanes().floatPane.appendChild(this.containerDiv);
+      };
+
+      /** Called when the popup is removed from the map. */
+      Popup.prototype.onRemove = function () {
+        if (this.containerDiv.parentElement) {
+          this.containerDiv.parentElement.removeChild(this.containerDiv);
+        }
+      };
+
+      /** Called each frame when the popup needs to draw itself. */
+      Popup.prototype.draw = function () {
+        var divPosition = this.getProjection().fromLatLngToDivPixel(this.position);
+
+        // Hide the popup when it is far out of view.
+        var display =
+          Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000 ?
+            'block' :
+            'none';
+
+        if (display === 'block') {
+          this.containerDiv.style.left = divPosition.x + 'px';
+          this.containerDiv.style.top = divPosition.y + 'px';
+        }
+        if (this.containerDiv.style.display !== display) {
+          this.containerDiv.style.display = display;
+        }
+      };
+
+      return Popup;
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpadYxQdstCIkqcZ1DtfadyRq3P3-lOYM&callback=initMap">
+    </script>
+</body>
+
+</html>

@@ -7,15 +7,14 @@ using namespace std;
 
 //Stack
 const int stackSize = 2;
-char stack[stackSize]; 
+char stack[stackSize];
 int top;
 void create_stack();
 void push(char);
 void displayStack();
 char pop();
-int isStackFull(); 
+int isStackFull();
 int isStackEmpty();
-
 
 //Queue
 const int sizeQueue = 3;
@@ -38,96 +37,118 @@ int iscFull();
 int iscEmpty();
 void print_cqueue();
 
-
 int main()
 {
 	create_stack();
 	create_queue();
-   	push('a');
-   	enqueue('b');
-   	enqueue('c');
-   	enqueue('d');
-   	push('e');
+	push('a');
+	enqueue('b');
+	enqueue('c');
+	enqueue('d');
+	push('e');
 
-   	push('F');
-   	enqueue('G');
+	push('F');
+	enqueue('G');
 
-   	cout << endl;
+	cout << endl;
 
-   	displayStack();
+	displayStack();
 
-   	print_queue();
+	print_queue();
 
-   	cout << pop() << " " << dequeue() << " " << dequeue() << " " << dequeue() << " " << pop() << endl;
+	cout << pop() << " " << dequeue() << " " << dequeue() << " " << dequeue() << " " << pop() << endl;
 
-   	cout << pop() << ", " << dequeue() << endl;
+	cout << pop() << ", " << dequeue() << endl;
 
-   	create_cqueue();
+	create_cqueue();
 
-   	c_enqueue('A');
-   	c_enqueue('B');
-   	c_enqueue('C');
-   	c_dequeue();
-   	c_enqueue('D');
+	cout << "HERE " << endl;
 
-   	print_cqueue();
+	c_enqueue('A');
+	print_cqueue();
+	c_enqueue('B');
+	print_cqueue();
+	c_enqueue('C');
+	print_cqueue();
+	c_enqueue('F');
+	print_cqueue();
+	c_dequeue();
+	print_cqueue();
+	c_enqueue('D');
+	print_cqueue();
 
-   	c_dequeue();
-   	c_dequeue();
-   	c_dequeue();
+	print_cqueue();
+
+	c_dequeue();
+	c_dequeue();
+	c_dequeue();
 }
 
-void create_queue() {
+void create_queue()
+{
 	front = -1;
 	rear = -1;
 }
 
-void enqueue(char item) {
-	if(rear == sizeQueue - 1) {
+void enqueue(char item)
+{
+	if (rear == sizeQueue - 1)
+	{
 		isQueueFull();
-		return ;
+		return;
 	}
 	queue[++rear] = item;
 }
 
-char dequeue() {
-	if(front == rear){
+char dequeue()
+{
+	if (front == rear)
+	{
 		return isQueueEmpty();
 	}
 	return queue[++front];
 }
 
-int isQueueFull() {
-	if(rear == sizeQueue - 1) {
+int isQueueFull()
+{
+	if (rear == sizeQueue - 1)
+	{
 		cout << "Queue Full";
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
 
-int isQueueEmpty() {
-	if(front == rear) {
+int isQueueEmpty()
+{
+	if (front == rear)
+	{
 		cout << "QueueEmpty";
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
 
-void print_queue() {
+void print_queue()
+{
 	int i;
 
-	if(isQueueEmpty()) {
+	if (isQueueEmpty())
+	{
 		cout << "Queue is Empty!" << endl;
-		
 	}
-	else {
+	else
+	{
 		i = front + 1;
 		cout << "Queue : ";
-		while(i <= rear) {
+		while (i <= rear)
+		{
 			cout << (char)queue[i] << " ";
 			i = i + 1;
 		}
@@ -135,59 +156,76 @@ void print_queue() {
 	}
 }
 
-void create_cqueue() {
+void create_cqueue()
+{
 	cfront = -1;
 	crear = -1;
 }
 
-void c_enqueue(int item) {
-	if(iscFull()) {
+void c_enqueue(int item)
+{
+	if (iscFull())
+	{
 		cout << "QueueFull" << endl;
 	}
-	else {
+	else
+	{
 		circularQueue[++crear] = item;
 	}
 }
 
-int c_dequeue() {
-	if(iscEmpty()) {
+int c_dequeue()
+{
+	if (iscEmpty())
+	{
 		cout << "QueueEmpty" << endl;
 		return 0;
 	}
-	else {
-		cfront = (cfront+1) % sizeQueue;
+	else
+	{
+		cfront = (cfront + 1) % sizeQueue;
 		return circularQueue[front];
 	}
 }
 
-int iscFull() {
-	int tmp = (crear+1) % sizeQueue;
-	if(tmp == cfront) {
+int iscFull()
+{
+	int tmp = (crear + 1) % sizeQueue;
+	if (tmp == cfront)
+	{
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
 
-int iscEmpty() {
-	if(cfront == crear) {
+int iscEmpty()
+{
+	if (cfront == crear)
+	{
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
 
-void print_cqueue() {
+void print_cqueue()
+{
 	int i;
 
-	if(iscEmpty()) {
+	if (iscEmpty())
+	{
 		cout << "Queue is Empty!" << endl;
 	}
-	else {
+	else
+	{
 		i = cfront + 1;
-		while(i <= crear) {
+		while (i <= crear)
+		{
 			cout << (char)circularQueue[i] << " ";
 			i = i + 1;
 		}
@@ -195,55 +233,68 @@ void print_cqueue() {
 	}
 }
 
-
 void create_stack() { top = -1; } //stack create
 
-int isStackFull() {
-   if (top == stackSize - 1) {
-   	return 1;
-   }
-   else return 0;
+int isStackFull()
+{
+	if (top == stackSize - 1)
+	{
+		return 1;
+	}
+	else
+		return 0;
 }
 
-int isStackEmpty() {
-   if (top == -1) {
-   	cout << "StackEmpty";
-	return 1;
-   } 
-   else return 0;
+int isStackEmpty()
+{
+	if (top == -1)
+	{
+		cout << "StackEmpty";
+		return 1;
+	}
+	else
+		return 0;
 }
 
-void push(char item) {
-	if(isStackFull()) {
+void push(char item)
+{
+	if (isStackFull())
+	{
 		cout << "Stack Full,  ";
 	}
-	else {
-   		++top;
-   		stack[top] = item;
+	else
+	{
+		++top;
+		stack[top] = item;
 	}
 }
 
-char pop() {
-	if(isStackEmpty()) {
-		
+char pop()
+{
+	if (isStackEmpty())
+	{
+
 		return (stack[top--]);
 	}
-	else {
+	else
+	{
 		return (stack[top--]);
 	}
 }
 
 void displayStack()
 {
-   int sp;
-   if (isStackEmpty()) cout << "" << endl;
-   else {
-   	cout << "Stack : ";
-      sp = top; // sp = temporary pointer
-      while (sp != -1) {
-         cout << stack[sp] << " "; 
-         sp--;
-      }
-
-   }
+	int sp;
+	if (isStackEmpty())
+		cout << "" << endl;
+	else
+	{
+		cout << "Stack : ";
+		sp = top; // sp = temporary pointer
+		while (sp != -1)
+		{
+			cout << stack[sp] << " ";
+			sp--;
+		}
+	}
 }

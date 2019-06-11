@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#serialize').click(function() {
+          person = new Object();
+          person.firstName = $('#first-name').val();
+          person.lastName = $('#last-name').val();
+          var jsonString = JSON.stringify(person);
+          $('#raw-json').val(jsonString);
+        })
+
+        $('#deserialize').click(function() {
+          var jsonString = $('#raw-json').val();
+          person = JSON.parse(jsonString);
+          $('#first-name').val(person["firstName"]);
+          $('#last-name').val(person.lastName);
+        })
+      })
+
+
+    </script>
+  </head>
+  <body>
+    <h3>Serialization demo</h3>
+    <p>Convert a string to json object (parse) and convert a JSON object to a string (stringify)</p>
+    <div>First name: <input type="text" id="first-name"/></div>
+    <div>Last name: <input type="text" id="last-name"/></div>
+    <div><button type="button" id="serialize">serialize to string</button></div>
+    <div>Raw json</div>
+    <div><textarea type="text" id="raw-json" rows="6" cols="40"></textarea></div>
+    <div><button type="button" id="deserialize">deserialize to string</button></div>
+  </body>
+</html>

@@ -29,3 +29,8 @@ void magic(int n) {
         cout << "\n";
     }
 }
+
+int main(void)
+{
+    magic(5);
+}

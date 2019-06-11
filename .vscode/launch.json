@@ -1,0 +1,81 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Hello",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.Hello",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - InterfaceEx",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.InterfaceEx",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - GoodCalc",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.GoodCalc",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - PrintE",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.PrintE",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - MethodOverriding",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.MethodOverriding",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - InstanceOfEx",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.InstanceOfEx",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Current",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.Current",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Problem9",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.Problem9",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - BookArray",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.BookArray",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - CircleArray",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.CircleArray",
+      "projectName": "OOP-Exercise"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - BookThis",
+      "request": "launch",
+      "mainClass": "kr.ac.kookmin.cs.oop.ch2.BookThis",
+      "projectName": "OOP-Exercise"
+    }
+  ]
+}

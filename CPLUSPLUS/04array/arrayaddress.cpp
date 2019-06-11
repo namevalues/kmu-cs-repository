@@ -11,9 +11,13 @@ int main() {
 	a[1][1] = 5;
 	a[1][2] = 6;
 
+	int (*numPtr)[3] = a;
+
+
+
 	for(int i = 0; i < 2; i ++) {
 		for(int j = 0; j < 3; j++) {
-			cout << "a["<<i<<"]["<<j<<"]="<<a[i][j]<<" at "<<&a[i][j]<<endl;
+			cout << "a["<<i<<"]["<<j<<"]="<<a[i][j]<<" at "<<&a[i]<<endl;
 		}
 	}
 
